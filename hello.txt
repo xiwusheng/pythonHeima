@@ -3,3 +3,4 @@ modify from web browser
 modify from windows
 push with origin_ssh
 push with origin_sh with ubuntu
+push with origin_ssh with Ubutnu-2
