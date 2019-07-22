@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 Django settings for dailyfresh project.
 
@@ -38,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'df_user',
+    'df_goods',
+    'tinymce',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -104,7 +107,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': 'advanced',
+    'width': 600,
+    'height': 400,
+}
+
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR, 'static1')
 ]
+
+# 开发阶段works
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static1')
+
+# 部署后works
+# STATIC_ROOT = '/var/www/dailyfresh/static1'
