@@ -6,7 +6,7 @@
 
 
 {% block body %}
-<body>
+
 	<div class="register_con">
 		<div class="l_con fl">
 			<a class="reg_logo"><img src="/static/images/logo02.png"></a>
@@ -17,10 +17,11 @@
 		<div class="r_con fr">
 			<div class="reg_title clearfix">
 				<h1>用户注册</h1>
-				<a href="#">登录</a>
+				<a href="{% url "df_user:login" %}">登录</a>
 			</div>
 			<div class="reg_form clearfix">
-				<form action="/user/register_handle/" method="post">
+				<!--id=reg_form is need for register.js to work-->
+				<form action="/user/register_handle/" id="reg_form" method="post">
 					{% csrf_token %}
 				<ul>
 					<li>
@@ -49,6 +50,7 @@
 						<span class="error_tip2">提示信息</span>
 					</li>
 					<li class="reg_sub">
+						<!--todo Button press visual effect-->
 						<input type="submit" value="注 册" name="">
 					</li>
 				</ul>				
@@ -61,8 +63,7 @@
 
 
 	
-</body>
+
 
 {% endblock body %}
 
-</html>

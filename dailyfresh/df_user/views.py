@@ -12,7 +12,12 @@ def index(request):
 
 
 def register(request):
-    return render(request, 'df_user/register.html')
+
+    # 此数值传过去,会放在标签页的位置上
+    context = {
+        'title': '用户注册YL'
+    }
+    return render(request, 'df_user/register.html', context)
 
 
 def register_handle(request):
@@ -21,7 +26,7 @@ def register_handle(request):
     upwd = post.get('pwd')
     upwd2= post.get('cpwd')
     uemail = post.get('email')
-    # 判断两次密码
+    # 判断两次密码一致性
     if upwd!=upwd2:
         return redirect('/user/register/')
 
@@ -70,6 +75,7 @@ def login_handle(request):
 
         if s1.hexdigest() == users[0].upwd:
             # password right 222
+            # todo redirect to /user/info/
             url = request.COOKIES.get('url', '/')
             red = HttpResponseRedirect(url)
             # whether checked remember user name 333
@@ -105,9 +111,7 @@ def login_handle(request):
         return render(request, 'df_user/login.html', context)
 
 
-# def logout(request):
-#     request.session.flush()  # 清空当前用户的所有session
-#     return redirect(reverse("df_goods:index"))
+
 
 
 def register_exist(request):
@@ -118,3 +122,40 @@ def register_exist(request):
     # two line for test
     # context = {'count': count}
     # return render(request, 'df_user/debug.html', context)
+
+
+def info(request): # 用户中心
+    username = request.session.get('username')
+    # user_email = UserInfo.objects.get(id=request.session.get['user_id']).uemail
+
+    context = {
+        'title': '用户中心',
+
+        # 'user_email': user_email,
+        'user_name': username,
+
+    }
+
+    return render(request, 'df_user/user_center_info.html', context)
+
+
+def order(request):
+    context = {'title': "用户中心"}
+    return render(request, 'df_user/user_center_order.html', context)
+
+
+def site(request):
+    user = UserInfo.objects.get(id=request.session['user_id'])
+    if request.method == 'POST':
+        post=request.POST
+        user.ushou=post.get('ushou')
+        user.uaddress=post.get('uaddress')
+        user.uyoubian=post.get('uyoubian')
+        user.uphone=post.get('uphone')
+        user.save()
+
+    context = {'title': "用户中心", 'user': user}
+    return render(request, 'df_user/user_center_site.html', context)
+
+
+

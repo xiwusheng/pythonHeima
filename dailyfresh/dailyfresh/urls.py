@@ -1,3 +1,4 @@
+# coding=utf-8
 """dailyfresh URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -17,7 +18,9 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+    # 此处不能提前配置,如果df_goods下没有urls.py的话
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^user/', include('df_user.urls')),
-    url(r'^tinymce/', include('tinymce.urls')),
+
+    url(r'^user/', include('df_user.urls', namespace='df_user')),
+    url(r'^tinymce/', include('tinymce.urls')),  # 使用富文本编辑框配置confur1
 ]
