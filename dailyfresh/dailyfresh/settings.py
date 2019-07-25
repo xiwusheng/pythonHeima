@@ -42,7 +42,7 @@ INSTALLED_APPS = (
     'df_goods',
     'tinymce',
 )
-
+MEDIA_URL = '/media/'
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -119,8 +119,13 @@ STATICFILES_DIRS=[
     os.path.join(BASE_DIR, 'static1')
 ]
 
+MEDIA_URL = '/media/'
 # 开发阶段works
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static1')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # 部署后works
 # STATIC_ROOT = '/var/www/dailyfresh/static1'
+
+
+
+
