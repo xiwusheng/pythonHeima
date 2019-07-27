@@ -119,6 +119,22 @@ def detail(request, gid):
     #             ordered_goods = browsed_goods.order_by("-browser_time")
     #             for _ in ordered_goods[5:]:
     #                 _.delete()
+
+    goods_ids = request.COOKIES.get('goods_ids', '')
+    goods_id = '%d'%goods.id
+
+    if goods_ids != '':  # 判断是否有浏览记录，如果有则继续判断
+        goods_ids1 = goods_ids.split(',')
+        if goods_ids1.count(goods_id) >= 1:
+            goods_ids1.remove(goods_id)
+        goods_ids1.insert(0, goods_id)
+        if len(goods_ids1) >= 6:
+            del goods_ids1[5]
+        goods_ids = ','.join(goods_ids1)
+    else:
+        goods_ids = goods_id
+    response.set_cookie('goods_ids', goods_ids)
+
     return response
 
 

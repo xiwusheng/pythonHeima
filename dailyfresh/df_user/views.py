@@ -1,14 +1,16 @@
 # coding=utf-8
-from django.shortcuts import render, redirect, HttpResponseRedirect,HttpResponse
+from django.shortcuts import render, redirect, HttpResponseRedirect, HttpResponse
 from models import *
 from hashlib import sha1
 from django.http import JsonResponse
+from df_goods.models import *
+from . import user_decorator
 
 # Create your views here.
 
 
 def index(request):
-    return HttpResponse('<h1>Index page</h1>')
+    return HttpResponse('<h1>Index page of User</h1>')
 
 
 def register(request):
@@ -76,6 +78,7 @@ def login_handle(request):
         if s1.hexdigest() == users[0].upwd:
             # password right 222
             # todo redirect to /user/info/
+            # 此处的url是user_decorator.py中预先存入的，便于返回之前未登陆的页面。如果没有就使用/
             url = request.COOKIES.get('url', '/')
             red = HttpResponseRedirect(url)
             # whether checked remember user name 333
@@ -111,7 +114,9 @@ def login_handle(request):
         return render(request, 'df_user/login.html', context)
 
 
-
+def logout(request):
+    request.session.flush()
+    return redirect('/')
 
 
 def register_exist(request):
@@ -124,26 +129,43 @@ def register_exist(request):
     # return render(request, 'df_user/debug.html', context)
 
 
-def info(request): # 用户中心
-    username = request.session.get('username')
-    # user_email = UserInfo.objects.get(id=request.session.get['user_id']).uemail
+@user_decorator.login
+def info(request):  # 用户中心
+
+    user_email = UserInfo.objects.get(id=request.session.get('user_id')).uemail
+
+    # 最近浏览
+    goods_ids = request.COOKIES.get('goods_ids', '')
+    goods_ids1 = goods_ids.split(',')
+    goods_list = []
+
+    if goods_ids1:
+        for goods_id in goods_ids1:
+            # 如果goods_ids1为空时，下一行有bug。todo
+            goods_list.append(GoodsInfo.objects.get(id=int(goods_id)))
+            explain = '最近浏览'
+    else:
+        explain = '无最近浏览'
 
     context = {
         'title': '用户中心',
-
-        # 'user_email': user_email,
-        'user_name': username,
-
+        'user_email': user_email,
+        'user_name': request.session.get('user_name'),
+        'page_name': 1,
+        'goods_list': goods_list,
+        'explain': explain,
     }
 
     return render(request, 'df_user/user_center_info.html', context)
 
 
+@user_decorator.login
 def order(request):
     context = {'title': "用户中心"}
     return render(request, 'df_user/user_center_order.html', context)
 
 
+@user_decorator.login
 def site(request):
     user = UserInfo.objects.get(id=request.session['user_id'])
     if request.method == 'POST':

@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^user/', include('df_user.urls', namespace='df_user')),
     url(r'^', include('df_goods.urls', namespace='df_goods')),
     url(r'^tinymce/', include('tinymce.urls')),  # 使用富文本编辑框配置confur1
-    url(r'^media/(?P<path>.*)$', serve, {"document_root":MEDIA_ROOT}), # 此处serve MEDIA_ROOT为了能够浏览器访问到
+    url(r'^media/(?P<path>.*)$', serve, {"document_root":MEDIA_ROOT}), # 此处serve MEDIA_ROOT为了能够浏览器访问到上传的图片
 ]
 
 

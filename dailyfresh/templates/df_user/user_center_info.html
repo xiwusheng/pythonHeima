@@ -13,20 +13,20 @@
 			</ul>
 		</div>
 		<div class="right_content clearfix">
-				<div class="info_con clearfix">
-				<h3 class="common_title2">基本信息</h3>
-						<ul class="user_info_list">
-							<li><span>用户名：</span>{{ user_name }}</li>
-							<li><span>联系方式：</span>{{ user_phone }}</li>
-							<li><span>联系地址：</span>{{ user_address }}</li>
-						</ul>
-				</div>
-            <h3 class="common_title2">{{ explain }}</h3>
+			<div class="info_con clearfix">
+			<h3 class="common_title2">基本信息</h3>
+					<ul class="user_info_list">
+						<li><span>用户名：</span>{{ user_name }}</li>
+						<li><span>联系方式：</span>{{ user_phone }}</li>
+						<li><span>联系地址：</span>{{ user_address }}</li>
+					</ul>
+			</div>
+            <h3 class="common_title2">{{ explain }}666</h3>
             <div class="has_view_list">
                 <ul class="goods_type_list clearfix">
                     {%  for good in goods_list %}
                     <li>
-                        <a href="/{{ good.id }}/"><img src="{{ MEDIA_URL }}{{ good.gpic }}"></a>
+                        <a href="/{{ good.id }}/"><img src="/media/{{ good.gpic }}"></a>
                         <h4><a href="/{{ good.id }}/">{{ good.gtitle }}</a></h4>
                         <div class="operate">
                             <span class="prize">￥{{ good.gprice }}</span>
@@ -35,7 +35,7 @@
                         </div>
                     </li>
                     {% endfor %}
-			</ul>
+				</ul>
             </div>
 		</div>
 	</div>

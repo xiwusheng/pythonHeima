@@ -16,7 +16,7 @@
 {#                    class="login_info fl"#}
 				<div class="login_btn fl">欢迎您：<em>{{ request.session.user_name }}</em>
                     <span>|</span>
-                    <em><a href="#">退出</a></em>
+                    <em><a href="{% url "df_user:logout" %}">退出</a></em>
 				</div>
                 {% else %}
 				<div class="login_btn fl">
