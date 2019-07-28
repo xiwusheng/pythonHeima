@@ -2,7 +2,8 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 
-from df_user.models import UserInfo
+# from df_user.models import UserInfo
+from df_cart.models import CartInfo
 from .models import GoodsInfo, TypeInfo
 
 
@@ -26,9 +27,17 @@ def index(request):
     type5 = typelist[5].goodsinfo_set.order_by('-id')[0:4]
     tpye51 = typelist[5].goodsinfo_set.order_by('-gclick')[0:4]
 
+    cart_num = 0
+    # 判断是否存在登陆状态
+    # if request.session.has_key('user_id'):
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        cart_num = CartInfo.objects.filter(user_id=int(user_id)).count()
+
     context = {
         'title': '首页',
         'guest_cart': 1,
+        'cart_num': cart_num,
         # 'type0': type0, 'type01': type01,
         # 'type1': type0, 'type11': type11,
         # 'type2': type0, 'type21': type21,
@@ -91,10 +100,12 @@ def detail(request, gid):
     goods.save()
 
     news = goods.gtype.goodsinfo_set.order_by('-id')[0:2]
+
+    # cart_num 传给html中我的购物车旁边显示的数量，调用view.py cart_count方法
     context = {
         'title': goods.gtype.ttitle,
         'guest_cart': 1,
-        # 'cart_num': cart_count(request),
+        'cart_num': cart_count(request),
         'goods': goods,
         'news': news,
         'id': good_id,
@@ -136,6 +147,15 @@ def detail(request, gid):
     response.set_cookie('goods_ids', goods_ids)
 
     return response
+
+
+# 顶部我的购物车显示的数量
+def cart_count(request):
+    if 'user_id' in request.session:
+        return CartInfo.objects.filter(user_id=request.session['user_id']).count()
+    else:
+        return 0
+
 
 
 
