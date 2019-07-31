@@ -31,7 +31,7 @@
 					<span>|</span>
 					<a href="/cart/">我的购物车</a>
 					<span>|</span>
-					<a href="#">我的订单</a>
+					<a href="/order/">我的订单</a>
 				</div>
 			</div>
 		</div>
@@ -58,8 +58,10 @@
                 })
 
             </script>
-			<input type="text" class="input_text fl" name="q" placeholder="搜索商品">
-			<input type="button" class="input_btn fr" name="" value="搜索">
+			<form method="get" action="/search/">
+				<input type="text" class="input_text fl" name="q" placeholder="搜索商品">
+				<input type="submit" class="input_btn fr" name="" value="搜索">
+			</form>
 		</div>
 
         {% if guest_cart == 1 %}

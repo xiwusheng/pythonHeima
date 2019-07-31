@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^register_exist/$', views.register_exist, name="register_exist"),
 
     url(r'^info/$', views.info, name="info"),
-    url(r'^order/$', views.order, name="order"),
+    url(r'^order/(\d+)/$', views.order, name="order"),
     url(r'^site/$', views.site, name="site"),
 
     url(r'^logout/$', views.logout, name="logout"),
