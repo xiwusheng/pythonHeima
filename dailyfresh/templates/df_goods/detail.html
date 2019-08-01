@@ -143,7 +143,9 @@
 
             $(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'});
 
-            $('#add_cart').click(function() {
+
+{#            		    此处不应该再写一个click事件。#}
+<!--            $('#add_cart').click(function() {-->
 
     {#            		    先判断是否登录#}
                 if ($('.login_btn').text().indexOf('登录') >= 0) {
@@ -160,7 +162,7 @@
                     "fast", function () {
                         $(".add_jump").fadeOut('fast', function () {
                             count = $('.num_show').val();
-                            $('#show_count').html(count);
+                            $('#show_count').html();
                     });
                 });
 
@@ -168,7 +170,7 @@
                 $.get('/cart/add{{ goods.id }}_'+num+'/',function (data) {
                     $('#show_count').text(data.count);
                 });
-            });
+<!--            });-->
         });
 
     });

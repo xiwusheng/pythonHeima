@@ -101,11 +101,18 @@ def detail(request, gid):
 
     news = goods.gtype.goodsinfo_set.order_by('-id')[0:2]
 
+    cart_num = 0
+    # 判断是否存在登陆状态
+    # if request.session.has_key('user_id'):
+    if 'user_id' in request.session:
+        user_id = request.session['user_id']
+        cart_num = CartInfo.objects.filter(user_id=int(user_id)).count()
+
     # cart_num 传给html中我的购物车旁边显示的数量，调用view.py cart_count方法
     context = {
         'title': goods.gtype.ttitle,
         'guest_cart': 1,
-        'cart_num': cart_count(request),
+        'cart_num': cart_num,
         'goods': goods,
         'news': news,
         'id': good_id,
