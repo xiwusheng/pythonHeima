@@ -52,22 +52,25 @@
         $('.num_show').blur(function () {
             count=parseFloat($(this).val());
             kucun=parseFloat($(this).attr('kucun'));
+
             if(count<1){
-                alert('数量不能小于1');
+                alert('数量不能小于1，请再次输入');
                 $(this).val(1);
                 count = 1;
-                $(this).focus();
+<!--                不能再focus，不然死循环-->
+<!--                $(this).focus();-->
                 return;
             }
             else if(count>kucun){
-             alert('数量不可超过库存');
-             $(this).val(kucun);
-             count = kucun;
-             $(this).focus();
-             return;
-            }
+            	alert('数量不可超过库存，请再次输入');
+            	$(this).val(kucun);
+            	count = kucun;
+<!--            	$(this).focus();-->
+            	return;
+            };
 
             cart_id = $(this).parents('.cart_list_td').attr('id');
+            alert(cart_id);
             $.get('/cart/edit'+cart_id+'_'+count+'/',function (data) {
                 if(data.count==0){
                     //修改成功，计算总价
